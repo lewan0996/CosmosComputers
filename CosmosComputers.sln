@@ -5,6 +5,10 @@ VisualStudioVersion = 15.0.27428.2015
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CosmosComputers.Web", "CosmosComputers.Web\CosmosComputers.Web.csproj", "{527DAEAB-A817-4527-A24B-663981B4758D}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CosmosComputers.Contract", "CosmosComputers.Contract\CosmosComputers.Contract.csproj", "{55EB1353-6098-4845-A2EA-88C66E73C4CF}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CosmosComputers.DataAccess", "CosmosComputers.DataAccess\CosmosComputers.DataAccess.csproj", "{050A4F87-EF3E-4650-8FB4-8B8928979E1E}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -15,6 +19,14 @@ Global
 		{527DAEAB-A817-4527-A24B-663981B4758D}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{527DAEAB-A817-4527-A24B-663981B4758D}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{527DAEAB-A817-4527-A24B-663981B4758D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{55EB1353-6098-4845-A2EA-88C66E73C4CF}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{55EB1353-6098-4845-A2EA-88C66E73C4CF}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{55EB1353-6098-4845-A2EA-88C66E73C4CF}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{55EB1353-6098-4845-A2EA-88C66E73C4CF}.Release|Any CPU.Build.0 = Release|Any CPU
+		{050A4F87-EF3E-4650-8FB4-8B8928979E1E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{050A4F87-EF3E-4650-8FB4-8B8928979E1E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{050A4F87-EF3E-4650-8FB4-8B8928979E1E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{050A4F87-EF3E-4650-8FB4-8B8928979E1E}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
