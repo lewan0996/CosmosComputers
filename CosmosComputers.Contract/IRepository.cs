@@ -1,11 +1,11 @@
-﻿using System.Collections.Generic;
-using System.Linq;
+﻿using System.Linq;
+using System.Threading.Tasks;
 
-namespace SBDCosmosDBSQL.Contract
+namespace CosmosComputers.Contract
 {
     public interface IRepository<T>
     {
-        T Get(string id);
+        Task<T> Get(string id);
         IQueryable<T> GetAll();
         void Delete(string id);
         void Add(T entity);

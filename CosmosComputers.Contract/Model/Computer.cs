@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 
-namespace SBDCosmosDBSQL.Contract.Model
+namespace CosmosComputers.Contract.Model
 {
     public class Computer
     {

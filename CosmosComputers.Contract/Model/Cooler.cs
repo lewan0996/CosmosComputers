@@ -1,4 +1,4 @@
-﻿namespace SBDCosmosDBSQL.Contract.Model
+﻿namespace CosmosComputers.Contract.Model
 {
     public class Cooler
     {
