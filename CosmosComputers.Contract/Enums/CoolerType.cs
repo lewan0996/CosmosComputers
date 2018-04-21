@@ -1,4 +1,4 @@
-﻿namespace CosmosComputers.Contract.Model
+﻿namespace CosmosComputers.Contract.Enums
 {
     public enum CoolerType
     {

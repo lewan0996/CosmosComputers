@@ -1,6 +1,8 @@
-﻿namespace CosmosComputers.Contract.Model
+﻿using CosmosComputers.Contract.Enums;
+
+namespace CosmosComputers.Contract.Model
 {
-    public class Disc
+    public class Disc : Entity
     {
         public string Producer { get; set; }
         public string Model { get; set; }

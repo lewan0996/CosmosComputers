@@ -7,7 +7,8 @@ namespace CosmosComputers.Contract
     {
         Task<T> Get(string id);
         IQueryable<T> GetAll();
-        void Delete(string id);
-        void Add(T entity);
+        Task<T> Update(string id, T entity);
+        Task Delete(string id);
+        Task<T> Add(T entity);
     }
 }
