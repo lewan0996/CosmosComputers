@@ -1,6 +1,6 @@
-﻿namespace SBDCosmosDBSQL.Contract.Model
+﻿namespace CosmosComputers.Contract.Model
 {
-    public class PowerSupply
+    public class PowerSupply : Entity
     {
         public string Producer { get; set; }
         public string Model { get; set; }
