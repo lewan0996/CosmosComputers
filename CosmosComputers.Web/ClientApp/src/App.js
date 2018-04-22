@@ -1,18 +1,38 @@
 import React, { Component } from 'react';
-import logo from './logo.svg';
 import './App.css';
+import 'antd/dist/antd.css';
+import SideMenu from './components/SideMenu';
+import { Layout } from 'antd';
+const { Header, Sider, Content } = Layout;
 
 class App extends Component {
   render() {
     return (
       <div className="App">
-        <header className="App-header">
-          <img src={logo} className="App-logo" alt="logo" />
-          <h1 className="App-title">Welcome to React</h1>
-        </header>
-        <p className="App-intro">
-          To get started, edit <code>src/App.js</code> and save to reload.
-        </p>
+        <Layout style={{height: "100%"}}>
+          <Header>
+            <h1 style={{ color: 'rgb(255, 255, 255, 0.65)', width: '100%' }}>
+              Cosmos Computers
+            </h1>
+          </Header>
+          <Layout style={{height: "100%"}}>
+            <Sider 
+            style={{height:"100%"}}             
+              breakpoint="sm"
+              collapsedWidth="0"
+            >
+              <SideMenu />
+            </Sider>
+            <Content>
+              qweqweqweqweeeeeeeeeasdfasdfadsfsadf
+              asdfasdfffffffffffffffffffffffffffff
+              asdfasdfffffffffffffffffffffffffffffweqr
+              qwetqwettttttttttttttttttttttttttttttttt
+              sdfgsdfgsdfgsdfgsdfgsfdgsdfgsdfgsdfgsdfgfsdgsfdg
+              AWERSERYSERT
+            </Content>
+          </Layout>          
+        </Layout>
       </div>
     );
   }
