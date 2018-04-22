@@ -1,8 +1,9 @@
 ﻿using System.Collections.Generic;
 
-namespace SBDCosmosDBSQL.Contract.Model
+namespace CosmosComputers.Contract.Model
 {
-    public class Computer
+    [EnsurePartsCompatibility]
+    public class Computer : Entity
     {
         public string Description { get; set; }
         public Motherboard Motherboard { get; set; }

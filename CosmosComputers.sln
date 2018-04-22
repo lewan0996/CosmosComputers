@@ -3,11 +3,11 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
 VisualStudioVersion = 15.0.27428.2015
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CosmosComputers.Web", "CosmosComputers.Web\CosmosComputers.Web.csproj", "{527DAEAB-A817-4527-A24B-663981B4758D}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CosmosComputers.Web", "CosmosComputers.Web\CosmosComputers.Web.csproj", "{527DAEAB-A817-4527-A24B-663981B4758D}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CosmosComputers.Contract", "CosmosComputers.Contract\CosmosComputers.Contract.csproj", "{55EB1353-6098-4845-A2EA-88C66E73C4CF}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CosmosComputers.Contract", "CosmosComputers.Contract\CosmosComputers.Contract.csproj", "{55EB1353-6098-4845-A2EA-88C66E73C4CF}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CosmosComputers.DataAccess", "CosmosComputers.DataAccess\CosmosComputers.DataAccess.csproj", "{050A4F87-EF3E-4650-8FB4-8B8928979E1E}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CosmosComputers.DataAccess", "CosmosComputers.DataAccess\CosmosComputers.DataAccess.csproj", "{050A4F87-EF3E-4650-8FB4-8B8928979E1E}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

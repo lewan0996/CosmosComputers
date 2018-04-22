@@ -1,10 +1,10 @@
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+using System.Globalization;
+using CosmosComputers.Contract;
+using CosmosComputers.DataAccess;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.SpaServices.Webpack;
+using Microsoft.Azure.Documents.Client;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 
@@ -23,6 +23,13 @@ namespace CosmosComputers.Web
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddMvc();
+
+            var cosmosOptions = Configuration.GetSection("CosmosDb");
+
+            services.AddSingleton(new DocumentClient(new Uri(cosmosOptions["uri"]), cosmosOptions["authKey"]));
+            services.AddSingleton(typeof(IRepository<>), typeof(CosmosSqlRepository<>));
+
+            Inflector.Inflector.SetDefaultCultureFunc = () => new CultureInfo("en-US");
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -31,11 +38,6 @@ namespace CosmosComputers.Web
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
-                app.UseWebpackDevMiddleware(new WebpackDevMiddlewareOptions
-                {
-                    HotModuleReplacement = true,
-                    ReactHotModuleReplacement = true
-                });
             }
             else
             {
