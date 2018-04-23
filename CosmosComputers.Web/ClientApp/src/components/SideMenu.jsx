@@ -6,11 +6,11 @@ const SideMenu = (props) => (
     <Menu 
     style={{ width: "100%", height: "100%" }} 
     mode="inline" 
-    theme="dark" 
+    theme="light" 
     defaultSelectedKeys={[props.location.pathname.substr(1)||"Computers"]}
     >
         <Menu.Item key="Computers">
-            <Link to="/" onClick={()=>console.log(props)}>Computers</Link>
+            <Link to="/">Computers</Link>
         </Menu.Item>
         <Menu.Item key="Cases">
             <Link to="/Cases">Cases</Link>
