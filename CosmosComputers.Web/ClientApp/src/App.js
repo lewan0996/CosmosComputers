@@ -1,36 +1,27 @@
 import React, { Component } from 'react';
 import './App.css';
+import 'semantic-ui-css/semantic.min.css';
 import SideMenu from './components/SideMenu';
-import { Layout } from 'antd';
 import { Route } from 'react-router-dom';
 import Computers from './components/pages/Computers';
 import Cases from './components/pages/Cases';
-const { Header, Sider, Content } = Layout;
+import { Grid } from 'semantic-ui-react';
 
 class App extends Component {
   render() {
     return (
       <div className="App">
-        <Layout style={{ height: "100%" }}>
-          <Header style={{ backgroundColor: "#FFFFFF" }}>
-            <h1 style={{ color: "rgba(0,0,0,0.65)", width: '100%' }}>
-              Cosmos Computers
-            </h1>
-          </Header>
-          <Layout style={{ height: "100%" }}>
-            <Sider
-              style={{ height: "100%" }}
-              breakpoint="sm"
-              collapsedWidth="0"
-            >
-              <SideMenu />
-            </Sider>
-            <Content>
+        <Grid style={{height: "100%"}}>          
+          <Grid.Row columns={2} style={{height: "100%"}}>
+            <Grid.Column width={4}>
+              <SideMenu color="blue"/>
+            </Grid.Column>
+            <Grid.Column width={12} stretched>
               <Route exact path="/" render={() => <Computers />} />
               <Route path="/Cases" render={() => <Cases />} />
-            </Content>
-          </Layout>
-        </Layout>
+            </Grid.Column>
+          </Grid.Row>
+        </Grid>
       </div>
     );
   }

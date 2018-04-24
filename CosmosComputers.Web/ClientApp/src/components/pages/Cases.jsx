@@ -1,5 +1,4 @@
 import * as React from 'react';
-import { Table } from 'antd';
 
 const columns = [{
     title: 'Producer',
@@ -23,8 +22,7 @@ const data = [{
 
 const Cases = (props) => (
     <div>
-        Cases
-        <Table columns={columns} dataSource={data} />
+        Cases        
     </div>
 );
 
