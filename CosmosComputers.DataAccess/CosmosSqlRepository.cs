@@ -1,10 +1,11 @@
-﻿using System.Linq;
+﻿using System;
+using System.Linq;
 using System.Threading.Tasks;
 using CosmosComputers.Contract;
 using CosmosComputers.Contract.Model;
-using Inflector;
 using Microsoft.Azure.Documents;
 using Microsoft.Azure.Documents.Client;
+using Microsoft.Extensions.Configuration;
 
 namespace CosmosComputers.DataAccess
 {
@@ -13,11 +14,18 @@ namespace CosmosComputers.DataAccess
         private readonly DocumentClient _client;
         private const string DbName = "CosmosComputers";
         private readonly string _collectionName;
-        
-        public CosmosSqlRepository(DocumentClient client)
+
+        public CosmosSqlRepository(string uri, string authKey, string collectionName)
         {
-            _client = client;
-            _collectionName = typeof(T).Name.Pluralize();
+            _client = new DocumentClient(new Uri(uri), authKey);
+            _collectionName = collectionName;
+        }
+
+        public CosmosSqlRepository(IConfiguration configuration, string collectionName = null)
+        {
+            var cosmosOptions = configuration.GetSection("cosmosDb");
+            _client = new DocumentClient(new Uri(cosmosOptions["uri"]), cosmosOptions["authKey"]);
+            _collectionName = collectionName ?? cosmosOptions["hardwareCollectionName"];
         }
         public async Task<T> Get(string id)
         {
@@ -37,7 +45,7 @@ namespace CosmosComputers.DataAccess
             var documentUri = UriFactory.CreateDocumentCollectionUri(DbName, _collectionName);
             entity.Id = id;
             var res = new Document();
-            
+
             await _client.UpsertDocumentAsync(documentUri, entity);
             return entity;
         }
