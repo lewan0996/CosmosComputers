@@ -3,7 +3,7 @@ import { Sidebar, Menu } from 'semantic-ui-react';
 import { Link, withRouter } from 'react-router-dom';
 
 const SideMenu = (props) => (
-    <Sidebar as={Menu} style={{ marginTop: 50 }} animation='push' width='thin' visible={true} icon='labeled' vertical inverted>
+    <Sidebar as={Menu} animation='push' width='thin' visible={true} icon='labeled' vertical inverted>
         <Menu.Item as={Link} to="/" active={props.location.pathname === '/'} color={props.color}>
             Computers
         </Menu.Item>

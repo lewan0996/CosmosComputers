@@ -1,28 +1,36 @@
 import * as React from 'react';
+import PartsTable from '../PartsTable';
 
-const columns = [{
-    title: 'Producer',
-    dataIndex: 'producer',
-    key: 'producer'
-}, {
-    title: 'Model',
-    dataIndex: 'model',
-    key: 'model'
-}];
+const data = [
+    {
+        producer: "Fractal Design",
+        model: "Define R6"
+    },
+    {
+        producer: "BeQuiet",
+        model: "Dark Base Pro 900"
+    }
+];
 
-const data = [{
-    key: '1',
-    producer: 'Fractal Design',
-    model: 'Define R6'
-}, {
-    key: '2',
-    producer: 'BeQuiet',
-    model: 'Dark Base Pro 900'
-}];
+const columns = [
+    {
+        displayName: "Producer",
+        key: "producer"
+    },
+    {
+        displayName: "Model",
+        key: "model"
+    }
+];
 
 const Cases = (props) => (
     <div>
-        Cases        
+        <PartsTable
+            columns={columns}
+            data={data}
+            onDeleteClick={(id) => alert(id)}
+            onEditClick={(item) => alert(item)}
+        />
     </div>
 );
 
