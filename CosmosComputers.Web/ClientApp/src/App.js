@@ -6,6 +6,7 @@ import { Route } from 'react-router-dom';
 import Computers from './components/pages/Computers';
 import Cases from './components/pages/Cases';
 import { Sidebar, Segment } from 'semantic-ui-react';
+import * as ApiServices from './services/ApiServices';
 
 class App extends Component {
   render() {
@@ -15,7 +16,7 @@ class App extends Component {
           <SideMenu color="blue" />
           <Sidebar.Pusher style={{padding: 50, paddingRight: 200, backgroundColor:"rgba(0,0,0,0.7)"}}> {/*150 - menu width*/}
             <Route exact path="/" render={() => <Computers />} />
-            <Route path="/Cases" render={() => <Cases data={[]} />} />
+            <Route path="/Cases" render={async () => <Cases data={await ApiServices.getAll("Cases")} />} />
           </Sidebar.Pusher>
         </Sidebar.Pushable>
       </div>
