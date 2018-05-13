@@ -25,6 +25,10 @@ class PowerSupplies extends TablePageBase {
             {
                 displayName: "Power",
                 key: "power"
+            },
+            {
+                displayName: "Price",
+                key: "price"
             }    
         ];
     }    

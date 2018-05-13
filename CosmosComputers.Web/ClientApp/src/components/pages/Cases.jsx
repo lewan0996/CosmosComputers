@@ -16,6 +16,10 @@ class Cases extends TablePageBase {
             {
                 displayName: "Model",
                 key: "model"
+            },
+            {
+                displayName: "Price",
+                key: "price"
             }
         ];
     }    

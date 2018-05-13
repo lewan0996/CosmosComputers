@@ -24,9 +24,13 @@ class GraphicCards extends TablePageBase {
             {
                 displayName: "Version",
                 key: "version"
-            }    
+            },
+            {
+                displayName: "Price",
+                key: "price"
+            }
         ];
-    }    
+    }
 }
 
 export default GraphicCards;

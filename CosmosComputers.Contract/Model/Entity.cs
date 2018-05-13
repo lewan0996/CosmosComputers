@@ -1,4 +1,5 @@
-﻿using Newtonsoft.Json;
+﻿using System.ComponentModel.DataAnnotations;
+using Newtonsoft.Json;
 
 namespace CosmosComputers.Contract.Model
 {
@@ -8,5 +9,7 @@ namespace CosmosComputers.Contract.Model
         public string Id { get; set; }
         [JsonProperty("discriminator")]
         public virtual string Discriminator => GetType().Name;
+        [Required]
+        public float Price { get; set; }
     }
 }

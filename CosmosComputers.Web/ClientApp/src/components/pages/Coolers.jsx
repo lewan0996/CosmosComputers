@@ -20,6 +20,10 @@ class Coolers extends TablePageBase{
             {
                 displayName: "Type",
                 key: "type"
+            },
+            {
+                displayName: "Price",
+                key: "price"
             }
         ];
     }    

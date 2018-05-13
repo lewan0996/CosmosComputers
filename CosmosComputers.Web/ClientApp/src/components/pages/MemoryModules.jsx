@@ -24,6 +24,10 @@ class MemoryModules extends TablePageBase {
             {
                 displayName: "Type",
                 key: "type"
+            },
+            {
+                displayName: "Price",
+                key: "price"
             }
         ];
     }

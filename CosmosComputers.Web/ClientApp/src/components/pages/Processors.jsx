@@ -20,6 +20,10 @@ class Processors extends TablePageBase{
             {
                 displayName: "Socket",
                 key: "socket"
+            },
+            {
+                displayName: "Price",
+                key: "price"
             }    
         ];
     }    

@@ -28,6 +28,10 @@ class Motherboards extends TablePageBase {
             {
                 displayName: "Memory type",
                 key: "memoryType"
+            },
+            {
+                displayName: "Price",
+                key: "price"
             }
         ];
     }    

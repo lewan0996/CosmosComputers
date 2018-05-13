@@ -28,6 +28,10 @@ class Discs extends TablePageBase {
             {
                 displayName: "Connector",
                 key: "connector"
+            },
+            {
+                displayName: "Price",
+                key: "price"
             }
         ];
     }   
