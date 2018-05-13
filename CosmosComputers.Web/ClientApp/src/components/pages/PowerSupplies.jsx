@@ -19,7 +19,8 @@ class PowerSupplies extends TablePageBase {
             },
             {
                 displayName: "Modular",
-                key: "isModular"
+                key: "isModular",
+                type: "boolean"                
             },
             {
                 displayName: "Power",

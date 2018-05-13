@@ -6,7 +6,6 @@ import { Route } from 'react-router-dom';
 import Computers from './components/pages/Computers';
 import Cases from './components/pages/Cases';
 import { Sidebar, Segment } from 'semantic-ui-react';
-import ApiServices from './services/ApiServices';
 import Coolers from './components/pages/Coolers';
 import Discs from './components/pages/Discs';
 import GraphicCards from './components/pages/GraphicCards';

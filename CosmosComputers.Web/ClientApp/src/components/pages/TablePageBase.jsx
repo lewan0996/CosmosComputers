@@ -1,33 +1,63 @@
 import * as React from 'react';
 import PartsTable from '../PartsTable';
 import ApiServices from '../../services/ApiServices';
+import { Modal } from 'semantic-ui-react';
+import PartForm from '../PartForm';
 
 class TablePageBase extends React.Component {
 
     constructor(props) {
         super(props);
         this.state = {
-
+            isModalOpen: false
         };
 
         this.pluralTypeName = this.__proto__.constructor.name;
+        this.apiServices = new ApiServices();
     }
 
-    getAll(){
-        new ApiServices().getAll(this.pluralTypeName).then(result =>
+    getAll() {
+        this.apiServices.getAll(this.pluralTypeName).then(result =>
             result.json()
-        ).then(json => this.setState({ data: json }));
+        ).then(json => {
+            this.setState({ data: json });
+            console.log(json);
+        });        
     }
 
-    componentWillMount() {
+    componentDidMount() {
         this.getAll();
     }
 
-    delete(id){
-        this.setState({data: null});
-        new ApiServices().delete(id, this.pluralTypeName).then(()=>{
+    delete(id) {
+        this.setState({ data: null });
+        this.apiServices.delete(id, this.pluralTypeName).then(() => {
             this.getAll();
         });
+    }
+
+    add(newElement) {
+        this.setState({ data: null });
+        this.apiServices.post(this.pluralTypeName, newElement).then(() => {
+            this.getAll();
+        });
+    }
+
+    put(element) {
+        console.log(this.state.data);
+        this.setState({ data: null });
+        this.apiServices.put(this.pluralTypeName, element, element.id).then(() => {
+            this.getAll();
+        });
+    }
+
+    submit(element) {
+        this.setState({ ...this.state, isModalOpen: false });
+        if (element.id) {
+            this.put(element);
+        } else {
+            this.add(element);
+        }
     }
 
     render() {
@@ -37,8 +67,15 @@ class TablePageBase extends React.Component {
                     columns={this.columns}
                     data={this.state.data}
                     onDeleteClick={(id) => this.delete(id)}
-                    onEditClick={(item) => alert(item)}
+                    onEditClick={(item) => this.setState({ ...this.state, elementToEdit: item, isModalOpen: true })}
+                    onAddClick={() => this.setState({ ...this.state, isModalOpen: true, elementToEdit: null })}
                 />
+                <Modal
+                    open={this.state.isModalOpen}
+                    onClose={() => this.setState({ ...this.state, isModalOpen: false })}
+                >
+                    <PartForm columns={this.columns} element={this.state.elementToEdit} onSubmit={(element) => this.submit(element)} />
+                </Modal>
             </div>
         );
     }

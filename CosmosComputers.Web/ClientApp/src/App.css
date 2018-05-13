@@ -12,3 +12,8 @@
     width: 100%;
     height: 100%;    
 }
+
+.ui.active.dimmer.modals.transition {
+    display: flex !important;
+    display: -ms-flexbox !important;
+}

@@ -1,10 +1,13 @@
 ﻿using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 
 namespace CosmosComputers.Contract.Model
 {
     [EnsurePartsCompatibility]
     public class Computer : Entity
     {
+        [Required]
+        public string Name { get; set; }
         public string Description { get; set; }
         public Motherboard Motherboard { get; set; }
         public Processor Processor { get; set; }

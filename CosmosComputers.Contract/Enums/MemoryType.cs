@@ -1,8 +1,9 @@
-﻿namespace CosmosComputers.Contract.Model
+﻿namespace CosmosComputers.Contract.Enums
 {
     public enum MemoryType
     {
-        DDR3 = 0,
-        DDR4 = 1
+        DDR2 = 0,
+        DDR3 = 1,
+        DDR4 = 2
     }
 }
