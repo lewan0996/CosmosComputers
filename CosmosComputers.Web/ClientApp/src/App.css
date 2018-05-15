@@ -17,3 +17,7 @@
     display: flex !important;
     display: -ms-flexbox !important;
 }
+
+.ui.modal {
+    margin-top: 0 !important;
+}

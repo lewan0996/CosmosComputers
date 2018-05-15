@@ -23,7 +23,25 @@ class MemoryModules extends TablePageBase {
             },
             {
                 displayName: "Type",
-                key: "type"
+                key: "type",
+                type: "enum",
+                options: [
+                    { 
+                        key: "DDR2", 
+                        text: "DDR2", 
+                        value: "DDR2" 
+                    },
+                    { 
+                        key: "DDR3", 
+                        text: "DDR3", 
+                        value: "DDR3" 
+                    },
+                    { 
+                        key: "DDR4", 
+                        text: "DDR4", 
+                        value: "DDR4" 
+                    }
+                ]
             },
             {
                 displayName: "Price",

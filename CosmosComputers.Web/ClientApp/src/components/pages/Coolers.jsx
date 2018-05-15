@@ -1,6 +1,6 @@
 import TablePageBase from "./TablePageBase";
 
-class Coolers extends TablePageBase{
+class Coolers extends TablePageBase {
 
     constructor(props) {
         super(props);
@@ -19,14 +19,27 @@ class Coolers extends TablePageBase{
             },
             {
                 displayName: "Type",
-                key: "type"
+                key: "type",
+                type: "enum",
+                options: [
+                    { 
+                        key: "Air", 
+                        text: "Air", 
+                        value: "Air" 
+                    },
+                    { 
+                        key: "AiO", 
+                        text: "AiO", 
+                        value: "AiO" 
+                    }
+                ]
             },
             {
                 displayName: "Price",
                 key: "price"
             }
         ];
-    }    
+    }
 }
 
 export default Coolers;

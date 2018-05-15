@@ -6,7 +6,7 @@ class Discs extends TablePageBase {
         super(props);
         this.state = {
 
-        };        
+        };
 
         this.columns = [
             {
@@ -23,18 +23,54 @@ class Discs extends TablePageBase {
             },
             {
                 displayName: "Type",
-                key: "type"
+                key: "type",
+                type: "enum",
+                options: [
+                    {
+                        key: "HDD",
+                        text: "HDD",
+                        value: "HDD"
+                    },
+                    {
+                        key: "SSD",
+                        text: "SSD",
+                        value: "SSD"
+                    }
+                ]
             },
             {
                 displayName: "Connector",
-                key: "connector"
+                key: "connector",
+                type: "enum",
+                options: [
+                    {
+                        key: "SATA2",
+                        text: "SATA2",
+                        value: "SATA2"
+                    },
+                    {
+                        key: "SATA3",
+                        text: "SATA3",
+                        value: "SATA3"
+                    },
+                    {
+                        key: "M2",
+                        text: "M2",
+                        value: "M2"
+                    },
+                    {
+                        key: "PCIe",
+                        text: "PCIe",
+                        value: "PCIe"
+                    }
+                ]
             },
             {
                 displayName: "Price",
                 key: "price"
             }
         ];
-    }   
+    }
 }
 
 export default Discs;

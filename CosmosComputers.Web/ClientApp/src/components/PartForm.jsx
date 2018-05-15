@@ -17,6 +17,7 @@ class PartForm extends React.Component {
     }
 
     setFieldContent(field, content) {
+        content = content.replace(",", ".");
         let element = this.state.element;
         element[field] = content;
         this.setState({ element });
@@ -58,6 +59,7 @@ class PartForm extends React.Component {
                                 onChange={(event, content) => this.setFieldContent(column.key, content.value)}
                                 error={this.state.errors[column.key]}
                                 value={this.state.element[column.key]}
+                                loading={column.isLoading}
                             />
 
                         </Form.Field>)

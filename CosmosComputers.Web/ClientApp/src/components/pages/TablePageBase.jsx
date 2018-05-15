@@ -1,8 +1,7 @@
 import * as React from 'react';
 import PartsTable from '../PartsTable';
 import ApiServices from '../../services/ApiServices';
-import { Modal } from 'semantic-ui-react';
-import PartForm from '../PartForm';
+import PartFormModal from '../PartFormModal';
 
 class TablePageBase extends React.Component {
 
@@ -20,9 +19,8 @@ class TablePageBase extends React.Component {
         this.apiServices.getAll(this.pluralTypeName).then(result =>
             result.json()
         ).then(json => {
-            this.setState({ data: json });
-            console.log(json);
-        });        
+            this.setState({ data: json });            
+        });
     }
 
     componentDidMount() {
@@ -44,7 +42,6 @@ class TablePageBase extends React.Component {
     }
 
     put(element) {
-        console.log(this.state.data);
         this.setState({ data: null });
         this.apiServices.put(this.pluralTypeName, element, element.id).then(() => {
             this.getAll();
@@ -69,13 +66,14 @@ class TablePageBase extends React.Component {
                     onDeleteClick={(id) => this.delete(id)}
                     onEditClick={(item) => this.setState({ ...this.state, elementToEdit: item, isModalOpen: true })}
                     onAddClick={() => this.setState({ ...this.state, isModalOpen: true, elementToEdit: null })}
-                />
-                <Modal
+                />                
+                <PartFormModal
                     open={this.state.isModalOpen}
                     onClose={() => this.setState({ ...this.state, isModalOpen: false })}
-                >
-                    <PartForm columns={this.columns} element={this.state.elementToEdit} onSubmit={(element) => this.submit(element)} />
-                </Modal>
+                    columns={this.columns}
+                    element={this.state.elementToEdit}
+                    onSubmit={(element) => this.submit(element)}
+                />
             </div>
         );
     }
