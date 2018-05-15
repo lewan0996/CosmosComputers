@@ -13,13 +13,17 @@ class PartForm extends React.Component {
     }
 
     componentWillReceiveProps(props) {
-        this.setState({ ...this.state, element: props.element });
+        this.setState({ ...this.state, element: props.element || {} });
     }
 
     setFieldContent(field, content) {
-        content = content.replace(",", ".");
+        if (typeof (content) === "string") {
+            content = content.replace(",", ".");
+        }
+
         let element = this.state.element;
         element[field] = content;
+        console.log(element);
         this.setState({ element });
         if (!content) {
             this.setState({ ...this.state, errors: { ...this.state.errors, [field]: true } });

@@ -6,9 +6,9 @@ namespace CosmosComputers.Web.Controllers
 {
     [Produces("application/json")]
     [Route("api/[controller]")]
-    public class GraphicCardsController : CrudController<GraphicsCard>
+    public class GraphicsCardsController : CrudController<GraphicsCard>
     {
-        public GraphicCardsController(IRepository<GraphicsCard> repository) : base(repository)
+        public GraphicsCardsController(IRepository<GraphicsCard> repository) : base(repository)
         {
         }
     }

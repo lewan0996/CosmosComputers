@@ -4,12 +4,14 @@ export default class ApiServices {
         this.url = "http://localhost:53203/api/";
     }
 
-    getById(id, pluralTypeName) {
-        return fetch(this.url + pluralTypeName + "/" + id);
+    async getById(id, pluralTypeName) {
+        const response = await fetch(this.url + pluralTypeName + "/" + id);
+        return await response.json();
     }
 
-    getAll(pluralTypeName) {
-        return fetch(this.url + pluralTypeName);
+    async getAll(pluralTypeName) {
+        const response = await fetch(this.url + pluralTypeName);
+        return await response.json();
     }
 
     post(pluralTypeName, element) {        

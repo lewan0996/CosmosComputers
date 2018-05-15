@@ -5,7 +5,7 @@ namespace CosmosComputers.Contract
 {
     public interface IRepository<T>
     {
-        Task<T> Get(string id);
+        Task<T> GetAsync(string id);
         IQueryable<T> GetAll();
         Task<T> Update(string id, T entity);
         Task Delete(string id);

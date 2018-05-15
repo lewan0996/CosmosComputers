@@ -27,7 +27,7 @@ namespace CosmosComputers.Web.Controllers
         {
             try
             {
-                var result = await Repository.Get(id);
+                var result = await Repository.GetAsync(id);
                 return Ok(result);
             }
             catch (DocumentClientException ex)
@@ -42,7 +42,7 @@ namespace CosmosComputers.Web.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> Add([FromBody]T item)
+        public virtual async Task<IActionResult> Add([FromBody]T item)
         {
             if (!ModelState.IsValid) return BadRequest(ModelState);
             await Repository.Add(item);
@@ -51,8 +51,12 @@ namespace CosmosComputers.Web.Controllers
 
 
         [HttpPut("{id}")]
-        public async Task<IActionResult> Update(string id, [FromBody] T item)
+        public virtual async Task<IActionResult> Update(string id, [FromBody] T item)
         {
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
             try
             {
                 await Repository.Update(id, item);

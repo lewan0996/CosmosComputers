@@ -16,11 +16,10 @@ class TablePageBase extends React.Component {
     }
 
     getAll() {
-        this.apiServices.getAll(this.pluralTypeName).then(result =>
-            result.json()
-        ).then(json => {
-            this.setState({ data: json });            
-        });
+        this.apiServices.getAll(this.pluralTypeName)
+            .then(json => {
+                this.setState({ data: json });
+            });
     }
 
     componentDidMount() {
@@ -66,7 +65,7 @@ class TablePageBase extends React.Component {
                     onDeleteClick={(id) => this.delete(id)}
                     onEditClick={(item) => this.setState({ ...this.state, elementToEdit: item, isModalOpen: true })}
                     onAddClick={() => this.setState({ ...this.state, isModalOpen: true, elementToEdit: null })}
-                />                
+                />
                 <PartFormModal
                     open={this.state.isModalOpen}
                     onClose={() => this.setState({ ...this.state, isModalOpen: false })}

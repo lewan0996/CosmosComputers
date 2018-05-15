@@ -30,7 +30,7 @@ namespace CosmosComputers.DataAccess
             _collectionName = collectionName ?? cosmosOptions["hardwareCollectionName"];
             _typeName = typeof(T).Name;
         }
-        public async Task<T> Get(string id)
+        public async Task<T> GetAsync(string id)
         {
             var documentUri = UriFactory.CreateDocumentUri(DbName, _collectionName, id);
             var document = await _client.ReadDocumentAsync<T>(documentUri);
@@ -47,7 +47,6 @@ namespace CosmosComputers.DataAccess
         {
             var documentUri = UriFactory.CreateDocumentCollectionUri(DbName, _collectionName);
             entity.Id = id;
-            var res = new Document();
 
             await _client.UpsertDocumentAsync(documentUri, entity);
             return entity;
