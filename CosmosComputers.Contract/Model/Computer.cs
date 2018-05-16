@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using Newtonsoft.Json;
 
 namespace CosmosComputers.Contract.Model
 {
@@ -7,6 +8,7 @@ namespace CosmosComputers.Contract.Model
     public class Computer : Entity
     {
         [Required]
+        [JsonProperty("name")]
         public string Name { get; set; }
         public Motherboard Motherboard { get; set; }
         public Processor Processor { get; set; }
