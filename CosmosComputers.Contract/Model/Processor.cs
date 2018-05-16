@@ -1,4 +1,5 @@
 ﻿using System.ComponentModel.DataAnnotations;
+using Newtonsoft.Json;
 
 namespace CosmosComputers.Contract.Model
 {
@@ -9,6 +10,7 @@ namespace CosmosComputers.Contract.Model
         [Required]
         public string Model { get; set; }
         [Required]
+        [JsonProperty("socket")]
         public string Socket { get; set; }
     }
 }

@@ -7,7 +7,12 @@ const PartFormModal = (props) => (
         open={props.open}
         onClose={props.onClose}
     >
-        <PartForm columns={props.columns} element={props.element} onSubmit={props.onSubmit} />
+        <PartForm
+            columns={props.columns}
+            element={props.element}
+            onSubmit={props.onSubmit}
+            onPropertyChange={(key, value) => props.onPropertyChange(key, value)}
+        />
     </Modal>
 );
 

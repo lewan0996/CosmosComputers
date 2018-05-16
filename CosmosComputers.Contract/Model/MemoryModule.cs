@@ -1,5 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using CosmosComputers.Contract.Enums;
+using Newtonsoft.Json;
 
 namespace CosmosComputers.Contract.Model
 {
@@ -12,6 +13,7 @@ namespace CosmosComputers.Contract.Model
         [Required]
         public int MemoryAmount { get; set; }
         [Required]
+        [JsonProperty("type")]
         public MemoryType Type { get; set; }
     }
 }

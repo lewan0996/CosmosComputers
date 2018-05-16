@@ -4,16 +4,19 @@ import { Form, Segment, Button, Select, Input } from 'semantic-ui-react';
 class PartForm extends React.Component {
 
     constructor(props) {
-        console.log(props);
         super(props);
         this.state = {
             element: props.element || {},
             errors: {}
         };
+
+        if (!props.onPropertyChange) {
+            this.props.onPropertyChange = () => { };
+        }
     }
 
     componentWillReceiveProps(props) {
-        this.setState({ ...this.state, element: props.element || {} });
+        this.setState({ ...this.state, element: props.element || this.state.element });
     }
 
     setFieldContent(field, content) {
@@ -45,6 +48,11 @@ class PartForm extends React.Component {
         }
     }
 
+    handleElementPropertyChange(columnKey, value) {
+        this.setFieldContent(columnKey, value);
+        this.props.onPropertyChange(columnKey, value);
+    }
+
     render() {
         return (
             <Segment inverted>
@@ -60,10 +68,11 @@ class PartForm extends React.Component {
                                         : column.options
                                 }
                                 placeholder={column.displayName}
-                                onChange={(event, content) => this.setFieldContent(column.key, content.value)}
+                                onChange={(event, content) => this.handleElementPropertyChange(column.key, content.value)}
                                 error={this.state.errors[column.key]}
                                 value={this.state.element[column.key]}
                                 loading={column.isLoading}
+                                disabled={column.disabled}
                             />
 
                         </Form.Field>)

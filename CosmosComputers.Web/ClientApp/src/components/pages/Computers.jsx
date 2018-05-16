@@ -43,32 +43,138 @@ class Computers extends React.Component {
                 this.getParts("Cases", "Case"),
                 this.getParts("Coolers", "Cooler"),
                 this.getParts("Discs", "Disc"),
-                this.getParts("MemoryModules", "Memory module 1"),
-                this.getParts("MemoryModules", "Memory module 2"),
-                this.getParts("MemoryModules", "Memory module 3"),
-                this.getParts("MemoryModules", "Memory module 4"),
+                //this.getParts("MemoryModules", "Memory module 1"),
+                //this.getParts("MemoryModules", "Memory module 2"),
+                //this.getParts("MemoryModules", "Memory module 3"),
+                //this.getParts("MemoryModules", "Memory module 4"),
                 this.getParts("Motherboards", "Motherboard"),
                 this.getParts("PowerSupplies", "Power supply"),
-                this.getParts("Processors", "Processor"),
+                // this.getParts("Processors", "Processor"),
                 this.getGraphicCards()
             ]);
-            this.columns.sort((a, b) =>
-                a.displayName.substring(0, a.displayName.length - 1) > b.displayName.substring(0, a.displayName.length - 1));
+            this.pushProcessorsColumn();
+            this.pushMemoryModulesColumn();
+            this.columns.sort((a, b) => {
+                if(a.displayName==="Motherboard"){
+                    return -1;
+                }
+                if(b.displayName==="Motherboard"){
+                    return 1;
+                }
+                if (a.displayName > b.displayName) {
+                    return 1;
+                } else if (a.displayName < b.displayName) {
+                    return -1;
+                } else {
+                    return 0;
+                }
+            });
+
             resolve();
         });
     }
 
+    pushProcessorsColumn() {
+        this.columns.push({
+            displayName: "Processor",
+            key: "processor",
+            type: "enum",
+            disabled: true
+        });
+    }
+
+    pushMemoryModulesColumn() {
+        this.columns = this.columns.concat([
+            {
+                displayName: "Memory module 1",
+                key: "memorymodule 1",
+                type: "enum",
+                disabled: true
+            },
+            {
+                displayName: "Memory module 2",
+                key: "memorymodule 2",
+                type: "enum",
+                disabled: true
+            },
+            {
+                displayName: "Memory module 3",
+                key: "memorymodule 3",
+                type: "enum",
+                disabled: true
+            },
+            {
+                displayName: "Memory module 4",
+                key: "memorymodule 4",
+                type: "enum",
+                disabled: true
+            }
+        ]);
+    }
+
+    async handlePropertyChange(key, value) {
+        if (key === "motherboard") {
+            const processorColumnIndex = this.state.columns.findIndex(c => c.key === "processor");
+            const memoryModule1Index = this.state.columns.findIndex(c => c.key === "memorymodule 1");
+            const memoryModule2Index = this.state.columns.findIndex(c => c.key === "memorymodule 2");
+            const memoryModule3Index = this.state.columns.findIndex(c => c.key === "memorymodule 3");
+            const memoryModule4Index = this.state.columns.findIndex(c => c.key === "memorymodule 4");
+
+            let columns = this.state.columns;
+
+            columns[processorColumnIndex].isLoading = true;
+            columns[memoryModule1Index].isLoading = true;
+            columns[memoryModule2Index].isLoading = true;
+            columns[memoryModule3Index].isLoading = true;
+            columns[memoryModule4Index].disabled = true;
+
+            this.setState({ ...this.state, columns });
+
+            const compatibleProcessorsTask = this.apiServices.getProcessorsOfSocket(value.cpuSocket);
+            const compatibleMemoryModulesTask = this.apiServices.getMemoryModulesOfType(value.memoryType);
+
+            const compatibleProcessors = (await compatibleProcessorsTask).map(p => ({
+                text: p.producer + " " + p.model,
+                key: p.producer + " " + p.model,
+                value: p
+            }));
+            const compatibleMemoryModules = (await compatibleMemoryModulesTask).map(m => ({
+                text: m.producer + " " + m.model + " " + m.memoryAmount,
+                key: m.producer + " " + m.model,
+                value: m
+            }));
+
+            columns[processorColumnIndex].options = compatibleProcessors;
+            columns[memoryModule1Index].options = compatibleMemoryModules;
+            columns[memoryModule2Index].options = compatibleMemoryModules;
+            columns[memoryModule3Index].options = compatibleMemoryModules;
+            columns[memoryModule4Index].options = compatibleMemoryModules;
+
+            columns[processorColumnIndex].disabled = false;
+            columns[memoryModule1Index].disabled = false;
+            columns[memoryModule2Index].disabled = false;
+            columns[memoryModule3Index].disabled = false;
+            columns[memoryModule4Index].disabled = false;
+
+            columns[processorColumnIndex].isLoading = false;
+            columns[memoryModule1Index].isLoading = false;
+            columns[memoryModule2Index].isLoading = false;
+            columns[memoryModule3Index].isLoading = false;
+            columns[memoryModule4Index].isLoading = false;
+
+            this.setState({ ...this.state, columns });
+        }
+    }
+
     async getComputerDescriptions() {
         const json = await this.apiServices.getById("descriptions", "Computers");
-        console.log(json);
         this.setState({
             ...this.state,
             descriptions: json.map(desc => ({
                 key: desc,
                 value: desc,
                 text: desc
-            })),
-            areDescriptionsLoading: false
+            }))            
         });
     }
 
@@ -76,7 +182,7 @@ class Computers extends React.Component {
         const json = await this.apiServices.getAll(pluralPartName);
         const part = {
             displayName: singularPartName.charAt(0).toUpperCase() + singularPartName.slice(1),
-            key: singularPartName.charAt(0).toLowerCase() + singularPartName.slice(1).replace(" ",""),
+            key: singularPartName.charAt(0).toLowerCase() + singularPartName.slice(1).replace(" ", ""),
             type: "enum",
             isLoading: false,
             options: json.map(p => ({
@@ -117,7 +223,7 @@ class Computers extends React.Component {
         element.description = "qwewqe";
 
         await this.apiServices.post("Computers", element);
-
+        await this.getComputerDescriptions();
         this.setState({ ...this.state, isLoading: false });
     }
 
@@ -139,6 +245,7 @@ class Computers extends React.Component {
                             columns={this.columns}
                             element={this.state.elementToEdit}
                             onSubmit={(element) => this.submit(element)}
+                            onPropertyChange={(key, value) => this.handlePropertyChange(key, value)}
                         />
                     </div>
                 }
