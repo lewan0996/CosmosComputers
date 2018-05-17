@@ -28,7 +28,9 @@ const PartsTable = (props) => (
                             <Table.Cell key={index2}>{convertBoolStringToYesNo(item[c.key].toString())}</Table.Cell>)}
                             <Table.Cell>
                                 <Button color="red" inverted onClick={() => props.onDeleteClick(item.id)}>Delete</Button>
-                                <Button color="blue" inverted onClick={() => props.onEditClick(item)}>Edit</Button>
+                                {(props.editable === undefined || props.editable) &&
+                                    <Button color="blue" inverted onClick={() => props.onEditClick(item)}>Edit</Button>
+                                }
                             </Table.Cell>
                         </Table.Row>
                     )}

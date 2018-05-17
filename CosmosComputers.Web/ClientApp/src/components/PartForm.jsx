@@ -26,7 +26,7 @@ class PartForm extends React.Component {
 
         let element = this.state.element;
         element[field] = content;
-        console.log(element);
+        
         this.setState({ element });
         if (!content) {
             this.setState({ ...this.state, errors: { ...this.state.errors, [field]: true } });
@@ -50,7 +50,8 @@ class PartForm extends React.Component {
 
     handleElementPropertyChange(columnKey, value) {
         this.setFieldContent(columnKey, value);
-        this.props.onPropertyChange(columnKey, value);
+        if(this.props.onPropertyChange)
+            this.props.onPropertyChange(columnKey, value);
     }
 
     render() {
