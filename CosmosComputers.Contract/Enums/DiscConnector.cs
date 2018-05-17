@@ -1,5 +1,9 @@
-﻿namespace CosmosComputers.Contract.Enums
+﻿using Newtonsoft.Json;
+using Newtonsoft.Json.Converters;
+
+namespace CosmosComputers.Contract.Enums
 {
+    [JsonConverter(typeof(StringEnumConverter))]
     public enum DiscConnector
     {
         SATA2 = 0,

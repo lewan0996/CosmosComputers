@@ -29,9 +29,14 @@ namespace CosmosComputers.Web
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddMvc().AddJsonOptions(options =>
-                options.SerializerSettings.ContractResolver = new CamelCasePropertyNamesContractResolver());
+                {
+                    options.SerializerSettings.ContractResolver = new CamelCasePropertyNamesContractResolver();
+                    options.SerializerSettings.Converters.Add(new StringEnumConverter());
+                });
 
             services.AddSingleton(typeof(IRepository<>), typeof(CosmosSqlRepository<>));
+
+            services.AddCors();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -52,6 +57,13 @@ namespace CosmosComputers.Web
             {
                 app.UseExceptionHandler("/Home/Error");
             }
+
+            app.UseCors(builder =>
+            {
+                builder.AllowAnyHeader();
+                builder.AllowAnyMethod();
+                builder.AllowAnyOrigin();
+            });
 
             app.UseStaticFiles();
 

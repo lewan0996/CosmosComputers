@@ -4,9 +4,10 @@ using Newtonsoft.Json.Converters;
 namespace CosmosComputers.Contract.Enums
 {
     [JsonConverter(typeof(StringEnumConverter))]
-    public enum CoolerType
+    public enum MemoryType
     {
-        Air = 0,
-        AiO = 1
+        DDR2 = 0,
+        DDR3 = 1,
+        DDR4 = 2
     }
 }

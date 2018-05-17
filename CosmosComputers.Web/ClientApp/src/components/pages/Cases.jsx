@@ -1,37 +1,28 @@
-import * as React from 'react';
-import PartsTable from '../PartsTable';
+import TablePageBase from "./TablePageBase";
 
-const data = [
-    {
-        producer: "Fractal Design",
-        model: "Define R6"
-    },
-    {
-        producer: "BeQuiet",
-        model: "Dark Base Pro 900"
-    }
-];
+class Cases extends TablePageBase {
 
-const columns = [
-    {
-        displayName: "Producer",
-        key: "producer"
-    },
-    {
-        displayName: "Model",
-        key: "model"
-    }
-];
+    constructor(props) {
+        super(props);
+        this.state = {
 
-const Cases = (props) => (
-    <div>
-        <PartsTable
-            columns={columns}
-            data={data}
-            onDeleteClick={(id) => alert(id)}
-            onEditClick={(item) => alert(item)}
-        />
-    </div>
-);
+        };
+
+        this.columns = [
+            {
+                displayName: "Producer",
+                key: "producer"
+            },
+            {
+                displayName: "Model",
+                key: "model"
+            },
+            {
+                displayName: "Price",
+                key: "price"
+            }
+        ];
+    }    
+}
 
 export default Cases;
