@@ -1,7 +1,7 @@
 export default class ApiServices {
 
     constructor() {
-        this.url = "http://localhost:53203/api/";
+        this.url = "https://cosmoscomputers.azurewebsites.net/api/";
     }
     
     async getById(id, pluralTypeName) {

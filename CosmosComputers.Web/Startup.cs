@@ -1,13 +1,8 @@
-using System;
 using System.Collections.Generic;
-using System.Globalization;
-using System.Runtime.InteropServices.ComTypes;
 using CosmosComputers.Contract;
-using CosmosComputers.Contract.Model;
 using CosmosComputers.DataAccess;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.Azure.Documents.Client;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Newtonsoft.Json;
