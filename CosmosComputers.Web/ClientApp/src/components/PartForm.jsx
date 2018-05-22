@@ -8,11 +8,7 @@ class PartForm extends React.Component {
         this.state = {
             element: props.element || {},
             errors: {}
-        };
-
-        if (!props.onPropertyChange) {
-            this.props.onPropertyChange = () => { };
-        }
+        };        
     }
 
     componentWillReceiveProps(props) {

@@ -43,12 +43,12 @@ namespace CosmosComputers.DataAccess
             return _client.CreateDocumentQuery<T>(collectionUri).Where(x => x.Discriminator.Equals(_typeName));
         }
 
-        public async Task<T> Update(string id, T entity)
+        public async Task<T> Update(string id, T entity, RequestOptions options = null)
         {
             var documentUri = UriFactory.CreateDocumentCollectionUri(DbName, _collectionName);
             entity.Id = id;
 
-            await _client.UpsertDocumentAsync(documentUri, entity);
+            await _client.UpsertDocumentAsync(documentUri, entity, options);
             return entity;
         }
 

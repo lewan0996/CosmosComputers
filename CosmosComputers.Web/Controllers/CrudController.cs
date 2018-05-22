@@ -1,7 +1,9 @@
-﻿using System.Threading.Tasks;
+﻿using System.Collections.Generic;
+using System.Threading.Tasks;
 using CosmosComputers.Contract;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Azure.Documents;
+using Microsoft.Azure.Documents.Client;
 
 namespace CosmosComputers.Web.Controllers
 {
@@ -59,7 +61,8 @@ namespace CosmosComputers.Web.Controllers
             }
             try
             {
-                await Repository.Update(id, item);
+                var requestOptions = new RequestOptions {PostTriggerInclude = new List<string> {"onPriceChanged"}};
+                await Repository.Update(id, item, requestOptions);
                 return NoContent();
             }
             catch (DocumentClientException ex)

@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { Select, Loader, Button, Icon } from 'semantic-ui-react';
+import { Loader } from 'semantic-ui-react';
 import ApiServices from '../../services/ApiServices';
 import PartFormModal from '../PartFormModal';
 import PartsTable from '../PartsTable';
@@ -27,14 +27,14 @@ class Computers extends React.Component {
         // ];        
     }
 
-    async componentDidMount() {
-        await this.getComputers();
-        await this.getAllParts();
-        this.columns.push({
+    async componentDidMount() {        
+        await this.getComputers();        
+        await this.getAllParts();   
+        this.columns.unshift({
             displayName: "Name",
             key: "name",
             isLoading: false
-        });
+        });     
         this.setState({ ...this.state, columns: this.columns, isLoading: false });
     }
 
@@ -54,14 +54,14 @@ class Computers extends React.Component {
                 this.getGraphicCards()
             ]);
             this.pushProcessorsColumn();
-            this.pushMemoryModulesColumn();
+            this.pushMemoryModulesColumn();            
             this.columns.sort((a, b) => {
                 if (a.displayName === "Motherboard") {
                     return -1;
                 }
                 if (b.displayName === "Motherboard") {
                     return 1;
-                }
+                }                
                 if (a.displayName > b.displayName) {
                     return 1;
                 } else if (a.displayName < b.displayName) {
@@ -69,8 +69,8 @@ class Computers extends React.Component {
                 } else {
                     return 0;
                 }
-            });
-
+            });            
+            this.pushPriceColumn();
             resolve();
         });
     }
@@ -81,6 +81,13 @@ class Computers extends React.Component {
             key: "processor",
             type: "enum",
             disabled: true
+        });
+    }
+
+    pushPriceColumn() {
+        this.columns.push({
+            displayName: "Price",
+            key: "price"
         });
     }
 
@@ -168,7 +175,7 @@ class Computers extends React.Component {
     }
 
     async getComputers() {
-        const json = await this.apiServices.getAll("Computers");
+        const json = await this.apiServices.getAll("Computers");       
         this.setState({
             ...this.state,
             computerDescriptions: json.map(c => ({
@@ -230,9 +237,10 @@ class Computers extends React.Component {
 
     flattenComputer(computer) {
         return {
+            ...computer,
             case: computer.case.producer + " " + computer.case.model,
             cooler: computer.cooler.producer + " " + computer.cooler.model,
-            disc: computer.disc.producer + " " + computer.cooler.model,
+            disc: computer.disc.producer + " " + computer.disc.model,
             graphicsCard: computer.graphicsCard.vendor + " " + computer.graphicsCard.model + " " + computer.graphicsCard.version,
             "memorymodule 1": computer.memoryModules[0].producer + " " + computer.memoryModules[0].model + " " + computer.memoryModules[0].memoryAmount,
             "memorymodule 2": computer.memoryModules[1].producer + " " + computer.memoryModules[1].model + " " + computer.memoryModules[1].memoryAmount,

@@ -10,6 +10,7 @@ namespace CosmosComputers.Contract.Model
         [JsonProperty("discriminator")]
         public virtual string Discriminator => GetType().Name;
         [Required]
+        [JsonProperty("price")]
         public float Price { get; set; }
     }
 }
