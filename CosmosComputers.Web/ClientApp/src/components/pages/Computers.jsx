@@ -95,25 +95,25 @@ class Computers extends React.Component {
         this.columns = this.columns.concat([
             {
                 displayName: "Memory module 1",
-                key: "memorymodule 1",
+                key: "memoryModule1",
                 type: "enum",
                 disabled: true
             },
             {
                 displayName: "Memory module 2",
-                key: "memorymodule 2",
+                key: "memoryModule2",
                 type: "enum",
                 disabled: true
             },
             {
                 displayName: "Memory module 3",
-                key: "memorymodule 3",
+                key: "memoryModule3",
                 type: "enum",
                 disabled: true
             },
             {
                 displayName: "Memory module 4",
-                key: "memorymodule 4",
+                key: "memoryModule4",
                 type: "enum",
                 disabled: true
             }
@@ -123,10 +123,10 @@ class Computers extends React.Component {
     async handlePropertyChange(key, value) {
         if (key === "motherboard") {
             const processorColumnIndex = this.state.columns.findIndex(c => c.key === "processor");
-            const memoryModule1Index = this.state.columns.findIndex(c => c.key === "memorymodule 1");
-            const memoryModule2Index = this.state.columns.findIndex(c => c.key === "memorymodule 2");
-            const memoryModule3Index = this.state.columns.findIndex(c => c.key === "memorymodule 3");
-            const memoryModule4Index = this.state.columns.findIndex(c => c.key === "memorymodule 4");
+            const memoryModule1Index = this.state.columns.findIndex(c => c.key === "memoryModule1");
+            const memoryModule2Index = this.state.columns.findIndex(c => c.key === "memoryModule2");
+            const memoryModule3Index = this.state.columns.findIndex(c => c.key === "memoryModule3");
+            const memoryModule4Index = this.state.columns.findIndex(c => c.key === "memoryModule4");
 
             let columns = this.state.columns;
 
@@ -175,7 +175,7 @@ class Computers extends React.Component {
     }
 
     async getComputers() {
-        const json = await this.apiServices.getAll("Computers");       
+        const json = await this.apiServices.getFlatComputers();   
         this.setState({
             ...this.state,
             computerDescriptions: json.map(c => ({
@@ -189,9 +189,18 @@ class Computers extends React.Component {
 
     async getParts(pluralPartName, singularPartName) {
         const json = await this.apiServices.getAll(pluralPartName);
+        const singularPartNameArray = singularPartName.split(" ");
+        let singularPartKey;
+        singularPartNameArray.forEach((element,index) => {
+            if(index===0){
+                singularPartKey=element.charAt(0).toLowerCase() + element.slice(1);
+            } else{
+                singularPartKey+=element.charAt(0).toUpperCase() + element.slice(1);
+            }
+        });
         const part = {
-            displayName: singularPartName.charAt(0).toUpperCase() + singularPartName.slice(1),
-            key: singularPartName.charAt(0).toLowerCase() + singularPartName.slice(1).replace(" ", ""),
+            displayName: singularPartName,
+            key: singularPartKey,
             type: "enum",
             isLoading: false,
             options: json.map(p => ({
@@ -224,35 +233,16 @@ class Computers extends React.Component {
     async submit(element) {
         this.setState({ ...this.state, isLoading: true, isModalOpen: false });
         element.memoryModules = [
-            element["memorymodule 1"],
-            element["memorymodule 2"],
-            element["memorymodule 3"],
-            element["memorymodule 4"]
+            element["memoryModule1"],
+            element["memoryModule2"],
+            element["memoryModule3"],
+            element["memoryModule4"]
         ];
 
         await this.apiServices.post("Computers", element);
         await this.getComputers();
         this.setState({ ...this.state, isLoading: false });
-    }
-
-    flattenComputer(computer) {
-        return {
-            ...computer,
-            case: computer.case.producer + " " + computer.case.model,
-            cooler: computer.cooler.producer + " " + computer.cooler.model,
-            disc: computer.disc.producer + " " + computer.disc.model,
-            graphicsCard: computer.graphicsCard.vendor + " " + computer.graphicsCard.model + " " + computer.graphicsCard.version,
-            "memorymodule 1": computer.memoryModules[0].producer + " " + computer.memoryModules[0].model + " " + computer.memoryModules[0].memoryAmount,
-            "memorymodule 2": computer.memoryModules[1].producer + " " + computer.memoryModules[1].model + " " + computer.memoryModules[1].memoryAmount,
-            "memorymodule 3": computer.memoryModules[2].producer + " " + computer.memoryModules[2].model + " " + computer.memoryModules[2].memoryAmount,
-            "memorymodule 4": computer.memoryModules[3].producer + " " + computer.memoryModules[3].model + " " + computer.memoryModules[3].memoryAmount,
-            motherboard: computer.motherboard.producer + " " + computer.motherboard.model,
-            powersupply: computer.powerSupply.producer + " " + computer.powerSupply.model + " " + computer.powerSupply.power,
-            processor: computer.processor.producer + " " + computer.processor.model,
-            name: computer.name,
-            id: computer.id
-        };
-    }
+    }    
 
     async delete(id) {
         this.setState({ ...this.state, isLoading: true });
@@ -281,7 +271,7 @@ class Computers extends React.Component {
 
                             <PartsTable
                                 columns={this.state.columns}
-                                data={this.state.computers.map(c => this.flattenComputer(c))}
+                                data={this.state.computers}
                                 onDeleteClick={(id) => this.delete(id)}
                                 onAddClick={() => this.setState({ ...this.state, isModalOpen: true })}
                                 editable={false}

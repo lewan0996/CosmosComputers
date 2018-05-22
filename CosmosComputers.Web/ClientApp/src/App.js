@@ -8,7 +8,7 @@ import Cases from './components/pages/Cases';
 import { Sidebar, Segment } from 'semantic-ui-react';
 import Coolers from './components/pages/Coolers';
 import Discs from './components/pages/Discs';
-import GraphicCards from './components/pages/GraphicCards';
+import GraphicCards from './components/pages/GraphicsCards';
 import MemoryModules from './components/pages/MemoryModules';
 import Motherboards from './components/pages/Motherboards';
 import PowerSupplies from './components/pages/PowerSupplies';

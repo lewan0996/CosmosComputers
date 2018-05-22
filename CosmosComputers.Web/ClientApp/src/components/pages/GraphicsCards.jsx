@@ -1,6 +1,6 @@
 import TablePageBase from "./TablePageBase";
 
-class GraphicCards extends TablePageBase {
+class GraphicsCards extends TablePageBase {
 
     constructor(props) {
         super(props);
@@ -33,4 +33,4 @@ class GraphicCards extends TablePageBase {
     }
 }
 
-export default GraphicCards;
+export default GraphicsCards;

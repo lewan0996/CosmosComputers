@@ -2,7 +2,10 @@ import * as React from 'react';
 import { Table, Button, Icon, Loader } from 'semantic-ui-react';
 
 const convertBoolStringToYesNo = (boolString) => {
-    switch (boolString) {
+    if(boolString===undefined){
+        return boolString;
+    }
+    switch (boolString.toString()) {
         case "true":
             return "Yes";
         case "false":
@@ -25,7 +28,7 @@ const PartsTable = (props) => (
                 {
                     props.data.map((item, index1) =>
                         <Table.Row key={index1}>{props.columns.map((c, index2) =>
-                            <Table.Cell key={index2}>{convertBoolStringToYesNo(item[c.key].toString())}</Table.Cell>)}
+                            <Table.Cell key={index2}>{convertBoolStringToYesNo(item[c.key])}</Table.Cell>)}
                             <Table.Cell>
                                 <Button color="red" inverted onClick={() => props.onDeleteClick(item.id)}>Delete</Button>
                                 {(props.editable === undefined || props.editable) &&
