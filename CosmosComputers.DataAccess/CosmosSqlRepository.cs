@@ -45,10 +45,10 @@ namespace CosmosComputers.DataAccess
 
         public async Task<T> Update(string id, T entity, RequestOptions options = null)
         {
-            var documentUri = UriFactory.CreateDocumentCollectionUri(DbName, _collectionName);
+            var documentUri = UriFactory.CreateDocumentUri(DbName, _collectionName, id);
             entity.Id = id;
 
-            await _client.UpsertDocumentAsync(documentUri, entity, options);
+            await _client.ReplaceDocumentAsync(documentUri, entity, options);
             return entity;
         }
 
