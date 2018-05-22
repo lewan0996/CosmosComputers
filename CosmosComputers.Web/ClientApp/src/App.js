@@ -8,7 +8,7 @@ import Cases from './components/pages/Cases';
 import { Sidebar, Segment } from 'semantic-ui-react';
 import Coolers from './components/pages/Coolers';
 import Discs from './components/pages/Discs';
-import GraphicCards from './components/pages/GraphicCards';
+import GraphicCards from './components/pages/GraphicsCards';
 import MemoryModules from './components/pages/MemoryModules';
 import Motherboards from './components/pages/Motherboards';
 import PowerSupplies from './components/pages/PowerSupplies';
@@ -20,7 +20,9 @@ class App extends Component {
       <div className="App">
         <Sidebar.Pushable as={Segment} style={{ border: "none", borderRadius: 0 }}>
           <SideMenu color="blue" />
-          <Sidebar.Pusher style={{ padding: 50, paddingRight: 200, backgroundColor: "rgba(0,0,0,0.7)", height:"100%" }}> {/*150 - menu width*/}
+          <Sidebar.Pusher
+            style={{ padding: 50, paddingRight: 200, backgroundColor: "rgba(0,0,0,0.7)", height: "100%", overflowY: "scroll" }}
+          > {/*150 - menu width*/}
             <Route exact path="/" render={() => <Computers />} />
             <Route path="/Cases" render={() => <Cases />} />
             <Route path="/Coolers" render={() => <Coolers />} />

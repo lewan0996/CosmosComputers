@@ -11,7 +11,7 @@ const PartFormModal = (props) => (
             columns={props.columns}
             element={props.element}
             onSubmit={props.onSubmit}
-            onPropertyChange={(key, value) => props.onPropertyChange(key, value)}
+            onPropertyChange={props.onPropertyChange}
         />
     </Modal>
 );

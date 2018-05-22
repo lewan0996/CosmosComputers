@@ -42,6 +42,46 @@ namespace CosmosComputers.Web.Controllers
             return Ok(Repository.GetAll().Select(c => c.Name));
         }
 
+        [HttpGet("Flat")]
+        public IActionResult GetFlatComputers()
+        {
+            var computers = Repository.GetAll().Select(computer => new
+            {
+                Case = computer.Case.Producer + " " + computer.Case.Model,
+                Cooler = computer.Cooler.Producer + " " + computer.Cooler.Model,
+                Disc = computer.Disc.Producer + " " + computer.Disc.Model,
+                GraphicsCard = computer.GraphicsCard.Vendor + " " + computer.GraphicsCard.Model + " " +
+                               computer.GraphicsCard.Version,
+                Motherboard = computer.Motherboard.Producer + " " + computer.Motherboard.Model,
+                PowerSupply = computer.PowerSupply.Producer + " " + computer.PowerSupply.Model,
+                Processor = computer.Processor.Producer + " " + computer.Processor.Model,
+                computer.Name,
+                computer.Id,
+                computer.MemoryModules,
+                computer.Price
+            }).ToList();
+
+            var computersWithFlattenMemoryModules = computers.Select(c => new
+            {
+                c.Motherboard,
+                c.Case,
+                c.Cooler,
+                c.Disc,
+                c.GraphicsCard,
+                c.Id,
+                c.Name,
+                c.PowerSupply,
+                c.Processor,
+                c.Price,
+                MemoryModule1 = c.MemoryModules.First().Producer + " " + c.MemoryModules.First().Model + " " + c.MemoryModules.First().MemoryAmount,
+                MemoryModule2 = c.MemoryModules.ElementAt(1).Producer + " " + c.MemoryModules.ElementAt(1).Model + " " + c.MemoryModules.ElementAt(1).MemoryAmount,
+                MemoryModule3 = c.MemoryModules.ElementAt(2).Producer + " " + c.MemoryModules.ElementAt(2).Model + " " + c.MemoryModules.ElementAt(2).MemoryAmount,
+                MemoryModule4 = c.MemoryModules.ElementAt(3).Producer + " " + c.MemoryModules.ElementAt(3).Model + " " + c.MemoryModules.ElementAt(3).MemoryAmount
+            });
+
+            return Ok(computersWithFlattenMemoryModules);
+        }
+
         [HttpPost]
         public override async Task<IActionResult> Add([FromBody]Computer item)
         {

@@ -1,13 +1,14 @@
 import * as React from 'react';
-import { Select, Loader, Button, Icon } from 'semantic-ui-react';
+import { Loader } from 'semantic-ui-react';
 import ApiServices from '../../services/ApiServices';
 import PartFormModal from '../PartFormModal';
+import PartsTable from '../PartsTable';
 
 class Computers extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            descriptions: [],
+            computerDescriptions: [],
             columns: [],
             isLoading: true,
             isModalOpen: false,
@@ -26,14 +27,14 @@ class Computers extends React.Component {
         // ];        
     }
 
-    async componentDidMount() {
-        await this.getComputerDescriptions();
-        await this.getAllParts();
-        this.columns.push({
+    async componentDidMount() {        
+        await this.getComputers();        
+        await this.getAllParts();   
+        this.columns.unshift({
             displayName: "Name",
             key: "name",
             isLoading: false
-        });
+        });     
         this.setState({ ...this.state, columns: this.columns, isLoading: false });
     }
 
@@ -53,14 +54,14 @@ class Computers extends React.Component {
                 this.getGraphicCards()
             ]);
             this.pushProcessorsColumn();
-            this.pushMemoryModulesColumn();
+            this.pushMemoryModulesColumn();            
             this.columns.sort((a, b) => {
-                if(a.displayName==="Motherboard"){
+                if (a.displayName === "Motherboard") {
                     return -1;
                 }
-                if(b.displayName==="Motherboard"){
+                if (b.displayName === "Motherboard") {
                     return 1;
-                }
+                }                
                 if (a.displayName > b.displayName) {
                     return 1;
                 } else if (a.displayName < b.displayName) {
@@ -68,8 +69,8 @@ class Computers extends React.Component {
                 } else {
                     return 0;
                 }
-            });
-
+            });            
+            this.pushPriceColumn();
             resolve();
         });
     }
@@ -83,29 +84,36 @@ class Computers extends React.Component {
         });
     }
 
+    pushPriceColumn() {
+        this.columns.push({
+            displayName: "Price",
+            key: "price"
+        });
+    }
+
     pushMemoryModulesColumn() {
         this.columns = this.columns.concat([
             {
                 displayName: "Memory module 1",
-                key: "memorymodule 1",
+                key: "memoryModule1",
                 type: "enum",
                 disabled: true
             },
             {
                 displayName: "Memory module 2",
-                key: "memorymodule 2",
+                key: "memoryModule2",
                 type: "enum",
                 disabled: true
             },
             {
                 displayName: "Memory module 3",
-                key: "memorymodule 3",
+                key: "memoryModule3",
                 type: "enum",
                 disabled: true
             },
             {
                 displayName: "Memory module 4",
-                key: "memorymodule 4",
+                key: "memoryModule4",
                 type: "enum",
                 disabled: true
             }
@@ -115,10 +123,10 @@ class Computers extends React.Component {
     async handlePropertyChange(key, value) {
         if (key === "motherboard") {
             const processorColumnIndex = this.state.columns.findIndex(c => c.key === "processor");
-            const memoryModule1Index = this.state.columns.findIndex(c => c.key === "memorymodule 1");
-            const memoryModule2Index = this.state.columns.findIndex(c => c.key === "memorymodule 2");
-            const memoryModule3Index = this.state.columns.findIndex(c => c.key === "memorymodule 3");
-            const memoryModule4Index = this.state.columns.findIndex(c => c.key === "memorymodule 4");
+            const memoryModule1Index = this.state.columns.findIndex(c => c.key === "memoryModule1");
+            const memoryModule2Index = this.state.columns.findIndex(c => c.key === "memoryModule2");
+            const memoryModule3Index = this.state.columns.findIndex(c => c.key === "memoryModule3");
+            const memoryModule4Index = this.state.columns.findIndex(c => c.key === "memoryModule4");
 
             let columns = this.state.columns;
 
@@ -166,23 +174,33 @@ class Computers extends React.Component {
         }
     }
 
-    async getComputerDescriptions() {
-        const json = await this.apiServices.getById("descriptions", "Computers");
+    async getComputers() {
+        const json = await this.apiServices.getFlatComputers();   
         this.setState({
             ...this.state,
-            descriptions: json.map(desc => ({
-                key: desc,
-                value: desc,
-                text: desc
-            }))            
+            computerDescriptions: json.map(c => ({
+                key: c.name,
+                value: c.name,
+                text: c.name
+            })),
+            computers: json
         });
     }
 
     async getParts(pluralPartName, singularPartName) {
         const json = await this.apiServices.getAll(pluralPartName);
+        const singularPartNameArray = singularPartName.split(" ");
+        let singularPartKey;
+        singularPartNameArray.forEach((element,index) => {
+            if(index===0){
+                singularPartKey=element.charAt(0).toLowerCase() + element.slice(1);
+            } else{
+                singularPartKey+=element.charAt(0).toUpperCase() + element.slice(1);
+            }
+        });
         const part = {
-            displayName: singularPartName.charAt(0).toUpperCase() + singularPartName.slice(1),
-            key: singularPartName.charAt(0).toLowerCase() + singularPartName.slice(1).replace(" ", ""),
+            displayName: singularPartName,
+            key: singularPartKey,
             type: "enum",
             isLoading: false,
             options: json.map(p => ({
@@ -215,15 +233,21 @@ class Computers extends React.Component {
     async submit(element) {
         this.setState({ ...this.state, isLoading: true, isModalOpen: false });
         element.memoryModules = [
-            element["memorymodule 1"],
-            element["memorymodule 2"],
-            element["memorymodule 3"],
-            element["memorymodule 4"]
+            element["memoryModule1"],
+            element["memoryModule2"],
+            element["memoryModule3"],
+            element["memoryModule4"]
         ];
-        element.description = "qwewqe";
 
         await this.apiServices.post("Computers", element);
-        await this.getComputerDescriptions();
+        await this.getComputers();
+        this.setState({ ...this.state, isLoading: false });
+    }    
+
+    async delete(id) {
+        this.setState({ ...this.state, isLoading: true });
+        await this.apiServices.delete(id, "computers");
+        await this.getComputers();
         this.setState({ ...this.state, isLoading: false });
     }
 
@@ -234,19 +258,25 @@ class Computers extends React.Component {
                     ?
                     <Loader active inverted style={{ margin: "0 auto", position: "relative" }}>Loading...</Loader>
                     :
-                    <div>
-                        <Select placeholder="Select computer..." options={this.state.descriptions} />
-                        <Button icon primary onClick={() => this.setState({ ...this.state, isModalOpen: true })}>
-                            <Icon name="add" />
-                        </Button>
+                    <div style={{ height: "100%", width: "100%", overflowX: "scroll", overflowY: "hidden" }}>
                         <PartFormModal
                             open={this.state.isModalOpen}
                             onClose={() => this.setState({ ...this.state, isModalOpen: false })}
                             columns={this.columns}
                             element={this.state.elementToEdit}
                             onSubmit={(element) => this.submit(element)}
-                            onPropertyChange={(key, value) => this.handlePropertyChange(key, value)}
+                            onPropertyChange={async (key, value) => await this.handlePropertyChange(key, value)}
                         />
+                        {this.state.computers &&
+
+                            <PartsTable
+                                columns={this.state.columns}
+                                data={this.state.computers}
+                                onDeleteClick={(id) => this.delete(id)}
+                                onAddClick={() => this.setState({ ...this.state, isModalOpen: true })}
+                                editable={false}
+                            />
+                        }
                     </div>
                 }
             </div>

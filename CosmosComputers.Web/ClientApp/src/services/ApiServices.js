@@ -24,6 +24,11 @@ export default class ApiServices {
         return await response.json();
     }
 
+    async getFlatComputers(){
+        const response = await fetch(this.url + "Computers/Flat");
+        return await response.json();
+    }
+
     post(pluralTypeName, element) {
         return fetch(this.url + pluralTypeName, {
             method: "POST",
