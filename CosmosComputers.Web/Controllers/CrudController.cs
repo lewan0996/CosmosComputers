@@ -1,7 +1,9 @@
-﻿using System.Threading.Tasks;
+﻿using System.Collections.Generic;
+using System.Threading.Tasks;
 using CosmosComputers.Contract;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Azure.Documents;
+using Microsoft.Azure.Documents.Client;
 
 namespace CosmosComputers.Web.Controllers
 {
@@ -9,16 +11,16 @@ namespace CosmosComputers.Web.Controllers
     [Route("api/[controller]")]
     public class CrudController<T> : Controller
     {
-        private readonly IRepository<T> _repository;
+        protected readonly IRepository<T> Repository;
         public CrudController(IRepository<T> repository)
         {
-            _repository = repository;
+            Repository = repository;
         }
 
         [HttpGet]
         public IActionResult GetAll()
         {
-            var results = _repository.GetAll();
+            var results = Repository.GetAll();
             return Ok(results);
         }
 
@@ -27,7 +29,7 @@ namespace CosmosComputers.Web.Controllers
         {
             try
             {
-                var result = await _repository.Get(id);
+                var result = await Repository.GetAsync(id);
                 return Ok(result);
             }
             catch (DocumentClientException ex)
@@ -42,20 +44,25 @@ namespace CosmosComputers.Web.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> Add([FromBody]T item)
+        public virtual async Task<IActionResult> Add([FromBody]T item)
         {
             if (!ModelState.IsValid) return BadRequest(ModelState);
-            await _repository.Add(item);
+            await Repository.Add(item);
             return NoContent();
         }
 
 
         [HttpPut("{id}")]
-        public async Task<IActionResult> Update(string id, [FromBody] T item)
+        public virtual async Task<IActionResult> Update(string id, [FromBody] T item)
         {
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
             try
             {
-                await _repository.Update(id, item);
+                var requestOptions = new RequestOptions {PostTriggerInclude = new List<string> {"onPriceChanged"}};
+                await Repository.Update(id, item, requestOptions);
                 return NoContent();
             }
             catch (DocumentClientException ex)
@@ -74,7 +81,7 @@ namespace CosmosComputers.Web.Controllers
         {
             try
             {
-                await _repository.Delete(id);
+                await Repository.Delete(id);
                 return NoContent();
             }
             catch (DocumentClientException ex)

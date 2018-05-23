@@ -1,38 +1,39 @@
 import React, { Component } from 'react';
 import './App.css';
-import 'antd/dist/antd.css';
+import 'semantic-ui-css/semantic.min.css';
 import SideMenu from './components/SideMenu';
-import { Layout } from 'antd';
-const { Header, Sider, Content } = Layout;
+import { Route } from 'react-router-dom';
+import Computers from './components/pages/Computers';
+import Cases from './components/pages/Cases';
+import { Sidebar, Segment } from 'semantic-ui-react';
+import Coolers from './components/pages/Coolers';
+import Discs from './components/pages/Discs';
+import GraphicCards from './components/pages/GraphicsCards';
+import MemoryModules from './components/pages/MemoryModules';
+import Motherboards from './components/pages/Motherboards';
+import PowerSupplies from './components/pages/PowerSupplies';
+import Processors from './components/pages/Processors';
 
 class App extends Component {
   render() {
     return (
       <div className="App">
-        <Layout style={{height: "100%"}}>
-          <Header>
-            <h1 style={{ color: 'rgb(255, 255, 255, 0.65)', width: '100%' }}>
-              Cosmos Computers
-            </h1>
-          </Header>
-          <Layout style={{height: "100%"}}>
-            <Sider 
-            style={{height:"100%"}}             
-              breakpoint="sm"
-              collapsedWidth="0"
-            >
-              <SideMenu />
-            </Sider>
-            <Content>
-              qweqweqweqweeeeeeeeeasdfasdfadsfsadf
-              asdfasdfffffffffffffffffffffffffffff
-              asdfasdfffffffffffffffffffffffffffffweqr
-              qwetqwettttttttttttttttttttttttttttttttt
-              sdfgsdfgsdfgsdfgsdfgsfdgsdfgsdfgsdfgsdfgfsdgsfdg
-              AWERSERYSERT
-            </Content>
-          </Layout>          
-        </Layout>
+        <Sidebar.Pushable as={Segment} style={{ border: "none", borderRadius: 0 }}>
+          <SideMenu color="blue" />
+          <Sidebar.Pusher
+            style={{ padding: 50, paddingRight: 200, backgroundColor: "rgba(0,0,0,0.7)", height: "100%", overflowY: "scroll" }}
+          > {/*150 - menu width*/}
+            <Route exact path="/" render={() => <Computers />} />
+            <Route path="/Cases" render={() => <Cases />} />
+            <Route path="/Coolers" render={() => <Coolers />} />
+            <Route path="/Discs" render={() => <Discs />} />
+            <Route path="/GraphicCards" render={() => <GraphicCards />} />
+            <Route path="/MemoryModules" render={() => <MemoryModules />} />
+            <Route path="/Motherboards" render={() => <Motherboards />} />
+            <Route path="/PowerSupplies" render={() => <PowerSupplies />} />
+            <Route path="/Processors" render={() => <Processors />} />
+          </Sidebar.Pusher>
+        </Sidebar.Pushable>
       </div>
     );
   }
