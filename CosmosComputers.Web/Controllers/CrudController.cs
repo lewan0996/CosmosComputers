@@ -21,6 +21,7 @@ namespace CosmosComputers.Web.Controllers
         public IActionResult GetAll()
         {
             var results = Repository.GetAll();
+            var query = results.ToString();
             return Ok(results);
         }
 

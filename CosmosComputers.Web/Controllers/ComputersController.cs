@@ -107,6 +107,7 @@ namespace CosmosComputers.Web.Controllers
             var getPriceResults = await Task.WhenAll(getPriceTasks);
 
             var memoryModuleIds = computer.MemoryModules.Select(m => m.Id);
+            var qwe = _memoryModulesRepository.GetAll().Where(m => memoryModuleIds.Contains(m.Id));
             var memoryModulesPrice = _memoryModulesRepository.GetAll().Where(m => memoryModuleIds.Contains(m.Id))
                 .Sum(m => m.Price);
 
